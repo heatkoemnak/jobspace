@@ -1,15 +1,8 @@
-import {
-  FiEdit,
-  FiChevronDown,
-  FiTrash,
-  FiShare,
-  FiPlusSquare,
-} from 'react-icons/fi';
 import { motion } from 'framer-motion';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IconType } from 'react-icons';
+import { useState } from 'react';
+import { FiChevronDown } from 'react-icons/fi';
 
-const StaggeredDropDown = () => {
+const DropDownMenu = ({ CareerCategories, name }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -19,7 +12,7 @@ const StaggeredDropDown = () => {
           onClick={() => setOpen((pv) => !pv)}
           className="flex items-center gap-2 px-3 py-2 rounded-md text-indigo-50 bg-indigo-500 hover:bg-indigo-500 transition-colors"
         >
-          <span className="font-medium text-sm">Select Position</span>
+          <span className="font-medium text-sm">{name}</span>
           <motion.span variants={iconVariants}>
             <FiChevronDown />
           </motion.span>
@@ -29,12 +22,11 @@ const StaggeredDropDown = () => {
           initial={wrapperVariants.closed}
           variants={wrapperVariants}
           style={{ originY: 'top', translateX: '-50%' }}
-          className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-48 overflow-hidden"
+          className="flex flex-col gap-2 p-2 rounded-lg -z-1 bg-white shadow-xl absolute top-[120%] left-[50%] w-48 overflow-hidden"
         >
-          <Option setOpen={setOpen} Icon={FiEdit} text="Edit" />
-          <Option setOpen={setOpen} Icon={FiPlusSquare} text="Duplicate" />
-          <Option setOpen={setOpen} Icon={FiShare} text="Share" />
-          <Option setOpen={setOpen} Icon={FiTrash} text="Remove" />
+          {CareerCategories.map((item) => {
+            return <Option key={item.text} Icon={item.icon} text={item.text} />;
+          })}
         </motion.ul>
       </motion.div>
     </div>
@@ -56,7 +48,7 @@ const Option = ({ text, Icon, setOpen }) => {
   );
 };
 
-export default StaggeredDropDown;
+export default DropDownMenu;
 
 const wrapperVariants = {
   open: {

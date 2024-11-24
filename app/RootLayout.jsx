@@ -2,15 +2,16 @@
 
 import localFont from 'next/font/local';
 import './globals.css';
-import { ClerkLoaded, ClerkProvider } from '@clerk/nextjs';
+import { ClerkLoaded, ClerkProvider, UserButton, useUser } from '@clerk/nextjs';
 import SideBar from '@/components/SideBar';
 import Sponsor from '@/components/Sponsor';
 import TopBar from '@/components/TopBar';
-import { ThemeContext, ThemeProvider, useTheme } from '@/context/ThemeContext';
-import { useContext, useState } from 'react';
+import { ThemeProvider } from '@/context/ThemeContext';
+import { useState } from 'react';
 import SwitchToggle from '@/components/SwitchToggle';
 import Button from '@/components/Button';
 import SubScribeService from '@/components/SubScribeService';
+import { ShiftingDropDown } from '@/components/ShiftingDropDown';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -24,40 +25,38 @@ export default function RootLayout({ children }) {
 
   return (
     <ClerkProvider>
-      <ThemeProvider>
-        <html lang="en">
-          <body className={`${geistSans.variable} antialiased`}>
-            <ClerkLoaded>
-              <main>
-                <div
-                  className={`${
-                    theme === 'light' ? 'bg-white' : 'bg-slate-700'
-                  }`}
-                >
-                  <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-                    <div className="col-span-4 lg:col-span-3">
-                      <SideBar theme={theme} />
-                    </div>
-                    <div className="col-span-4 lg:col-span-6">
-                      <TopBar />
-                      {children}
-                    </div>
-                    <div className="col-span-4 lg:col-span-3">
-                      <div className="flex justify-between items-center">
-                        <Button theme={theme} text="Sign in" />
-                        <Button theme={theme} text="Sign up" />
-                        <SwitchToggle theme={theme} setTheme={setTheme} />
-                      </div>
-                      <SubScribeService />
-                      <Sponsor />
-                    </div>
-                  </div>
+      <html lang="en">
+        <body className={`${geistSans.variable} antialiased`}>
+          <main>
+            <div
+              className={`${theme === 'light' ? 'bg-white' : 'bg-slate-700'}`}
+            >
+              <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+                <div className="col-span-4 lg:col-span-3">
+                  <SideBar theme={theme} />
                 </div>
-              </main>
-            </ClerkLoaded>
-          </body>
-        </html>
-      </ThemeProvider>
+                <div className="col-span-4 lg:col-span-6">
+                  <TopBar />
+                  {/* <Services /> */}
+                  <ShiftingDropDown theme={theme} />
+                  {children}
+                </div>
+                <div className="col-span-4 lg:col-span-3">
+                  <div className="flex justify-between items-center">
+                    <>
+                      <Button theme={theme} text="Sign in" />
+                      <Button theme={theme} text="Sign up" />
+                    </>
+                    <SwitchToggle theme={theme} setTheme={setTheme} />
+                  </div>
+                  <SubScribeService />
+                  <Sponsor />
+                </div>
+              </div>
+            </div>
+          </main>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

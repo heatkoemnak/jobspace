@@ -1,16 +1,17 @@
 'use client';
 
 import Slider from './Slider';
-import TopBar from './TopBar';
-import Card from './Card';
+import JobList from './JobList';
 import Banner from './Banner';
+import Services from './Services';
 
 const MainContainer = () => {
   return (
     <>
+    
       <Banner />
       <Slider />
-      <Card />
+      <JobList />
     </>
   );
 };

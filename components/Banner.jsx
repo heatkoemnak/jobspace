@@ -61,7 +61,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <Services />
+     
     </>
   );
 };
